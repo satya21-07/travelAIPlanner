@@ -1,0 +1,11 @@
+<section class="history" *ngIf="plans.length" @historyIn>
+  <div>
+    <p class="eyebrow">Saved Plans</p>
+    <h2>Recent itineraries</h2>
+  </div>
+  <button type="button" *ngFor="let plan of plans" (click)="selectPlan.emit(plan)">
+    <span>{{ plan.destination }}</span>
+    <small>{{ plan.days }} days - {{ plan.currency }} {{ plan.total_estimated_cost | number:'1.0-0' }}</small>
+  </button>
+</section>
+

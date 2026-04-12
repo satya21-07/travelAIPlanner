@@ -1,0 +1,24 @@
+<main class="shell">
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <app-planner-form
+    [form]="form"
+    [loading]="loading"
+    [error]="error"
+    (submitPlan)="createPlan()"
+  />
+
+  <app-itinerary-result [plan]="selectedPlan" />
+
+  <app-destination-gallery
+    [destinations]="destinations"
+    (choose)="useDestination($event)"
+  />
+
+  <app-history-strip
+    [plans]="history"
+    (selectPlan)="selectedPlan = $event"
+  />
+</main>
+

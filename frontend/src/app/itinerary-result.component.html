@@ -1,0 +1,81 @@
+<section class="result-panel itinerary-dashboard" *ngIf="plan; else emptyState" @resultIn>
+  <div class="result-head">
+    <div class="result-copy">
+      <p class="eyebrow">Plan #{{ plan.id }}</p>
+      <h2>{{ plan.destination }}</h2>
+      <p>{{ plan.summary }}</p>
+      <div class="route-pills">
+        <span>{{ plan.days }} days</span>
+        <span>{{ plan.travelers }} travelers</span>
+        <span>{{ plan.travel_style }}</span>
+      </div>
+    </div>
+    <div class="price">
+      <span>{{ plan.currency }}</span>
+      <strong>{{ plan.total_estimated_cost | number:'1.0-0' }}</strong>
+      <small>estimated total</small>
+    </div>
+  </div>
+
+  <div class="route-board">
+    <div class="route-visual" aria-hidden="true">
+      <span class="pin start"></span>
+      <span class="route-line"></span>
+      <span class="pin finish"></span>
+      <strong>{{ plan.destination }}</strong>
+    </div>
+
+    <div class="costs" @listIn>
+      <div class="cost-tile" *ngFor="let item of costItems(plan); let index = index" [style.--tile-index]="index">
+        <span>{{ labelize(item[0]) }}</span>
+        <strong>{{ plan.currency }} {{ item[1] | number:'1.0-0' }}</strong>
+        <i [style.width.%]="costPercent(plan, item[1])"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="days timeline timeline-viewport" (scroll)="onTimelineScroll($event)" @listIn>
+    <div class="timeline-spacer" [style.height.px]="topSpacerHeight()"></div>
+    <article *ngFor="let day of renderedDays(plan)">
+      <div class="day-marker">
+        <span>{{ day.day }}</span>
+      </div>
+      <div class="day-card">
+        <div class="day-card-head">
+          <div>
+            <small>Day {{ day.day }}</small>
+            <h3>{{ day.title }}</h3>
+          </div>
+          <strong>{{ plan.currency }} {{ day.estimated_cost | number:'1.0-0' }}</strong>
+        </div>
+        <div class="day-slots">
+          <p><span>Morning</span>{{ day.morning }}</p>
+          <p><span>Afternoon</span>{{ day.afternoon }}</p>
+          <p><span>Evening</span>{{ day.evening }}</p>
+        </div>
+        <div class="food-note">{{ day.food }}</div>
+      </div>
+    </article>
+    <div class="timeline-spacer" [style.height.px]="bottomSpacerHeight(plan)"></div>
+  </div>
+
+  <div class="tips" @listIn>
+    <div>
+      <p class="eyebrow">Trip Notes</p>
+      <h3>Keep it smooth.</h3>
+    </div>
+    <p class="tip-line" *ngFor="let tip of plan.tips">{{ tip }}</p>
+  </div>
+</section>
+
+<ng-template #emptyState>
+  <section class="result-panel empty" @resultIn>
+    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80" alt="Mountain road at sunrise">
+    <div>
+      <p class="eyebrow">Ready when you are</p>
+      <h2>Your itinerary will land here.</h2>
+      <p>Start with a destination and budget. The planner will balance days, travel style, and interests.</p>
+    </div>
+  </section>
+</ng-template>
+

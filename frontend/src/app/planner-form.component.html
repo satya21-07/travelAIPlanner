@@ -1,0 +1,67 @@
+<section class="planner-panel" @panelIn>
+  <div class="brand-stage" aria-label="TravelAI animated logo">
+    <div class="motion-logo">
+      <span class="logo-orbit orbit-one"></span>
+      <span class="logo-orbit orbit-two"></span>
+      <span class="logo-core">TA</span>
+      <span class="route-dot dot-one"></span>
+      <span class="route-dot dot-two"></span>
+      <span class="route-dot dot-three"></span>
+    </div>
+    <div>
+      <p class="brand-kicker">Smart routes. Clear budgets.</p>
+      <strong>TravelAI</strong>
+    </div>
+  </div>
+
+  <div class="intro">
+    <p class="eyebrow">TravelAI Planner</p>
+    <h1>Plan a trip that respects the budget.</h1>
+    <p>Choose a place, set the money limit, and get a day-by-day route with stay, food, transport, and activity estimates.</p>
+  </div>
+
+  <div class="signal-strip">
+    <span>Budget fit</span>
+    <span>Local food</span>
+    <span>Day routes</span>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submitPlan.emit()" class="trip-form">
+    <label>Destination<input formControlName="destination" placeholder="Goa, Jaipur, Manali"></label>
+    <label>Starting from<input formControlName="start_location" placeholder="Delhi, Mumbai, Bengaluru"></label>
+
+    <div class="grid-3">
+      <label>Days<input type="number" formControlName="days" min="1" max="21"></label>
+      <label>Travelers<input type="number" formControlName="travelers" min="1" max="12"></label>
+      <label>Budget<input type="number" formControlName="budget" min="1"></label>
+    </div>
+
+    <div class="grid-2">
+      <label>
+        Currency
+        <select formControlName="currency">
+          <option value="INR">INR</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+        </select>
+      </label>
+      <label>
+        Travel style
+        <select formControlName="travel_style">
+          <option value="budget">Budget</option>
+          <option value="balanced">Balanced</option>
+          <option value="comfort">Comfort</option>
+          <option value="luxury">Luxury</option>
+        </select>
+      </label>
+    </div>
+
+    <label>Interests<input formControlName="interests" placeholder="beach, food, heritage"></label>
+
+    <button type="submit" [disabled]="form.invalid || loading">
+      <span>{{ loading ? 'Planning...' : 'Create itinerary' }}</span>
+    </button>
+    <p class="error" *ngIf="error">{{ error }}</p>
+  </form>
+</section>
+

@@ -1,0 +1,18 @@
+<section class="destinations">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Starter Ideas</p>
+      <h2>Pick a proven route.</h2>
+    </div>
+    <p>Tap a card to tune the planner instantly.</p>
+  </div>
+
+  <div class="destination-grid" @galleryIn>
+    <button type="button" *ngFor="let destination of destinations" (click)="choose.emit(destination)">
+      <img [src]="destination.image" [alt]="destination.name">
+      <span>{{ destination.name }}</span>
+      <small>{{ destination.best_for }}</small>
+    </button>
+  </div>
+</section>
+
