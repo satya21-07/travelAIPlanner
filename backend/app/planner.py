@@ -23,9 +23,24 @@ DESTINATIONS: tuple[DestinationProfile, ...] = (
     DestinationProfile("Rishikesh", "India", ("adventure", "spiritual", "nature"), 2200, "rafting, yoga, riverside stays", "https://images.unsplash.com/photo-1591017403286-fd8493524e1e?auto=format&fit=crop&w=1200&q=80", ("Ganga aarti", "River rafting", "Beatles Ashram", "Lakshman Jhula")),
     DestinationProfile("Kerala", "India", ("backwater", "nature", "wellness"), 3500, "houseboats, tea estates, slow travel", "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=80", ("Alleppey backwaters", "Munnar tea gardens", "Fort Kochi", "Varkala cliff")),
     DestinationProfile("Udaipur", "India", ("heritage", "romantic", "food"), 3100, "lakes, palaces, sunset dinners", "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?auto=format&fit=crop&w=1200&q=80", ("City Palace", "Lake Pichola", "Bagore Ki Haveli", "Sajjangarh")),
-    DestinationProfile("Darjeeling", "India", ("mountains", "tea", "nature"), 2700, "tea gardens, sunrise points, toy train", "https://images.unsplash.com/photo-1544634076-a90160ddf1d6?auto=format&fit=crop&w=1200&q=80", ("Tiger Hill", "Batasia Loop", "Tea estate", "Mall Road")),
+    DestinationProfile("Darjeeling", "India", ("mountains", "tea", "nature"), 2700, "tea gardens, sunrise points, toy train", "https://images.unsplash.com/photo-1627885449745-f0ea150fd63a?auto=format&fit=crop&w=1200&q=80", ("Tiger Hill", "Batasia Loop", "Tea estate", "Mall Road")),
     DestinationProfile("Leh Ladakh", "India", ("adventure", "mountains", "roadtrip"), 4800, "high-altitude drives, monasteries, lakes", "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1200&q=80", ("Shanti Stupa", "Pangong Lake", "Khardung La", "Thiksey Monastery")),
+    DestinationProfile("Varanasi", "India", ("spiritual", "culture", "heritage"), 2000, "Ganga Ghats, ancient temples, spiritual aura", "https://images.unsplash.com/photo-1561359313-0639aad0a844?auto=format&fit=crop&w=1200&q=80", ("Dashashwamedh Ghat", "Kashi Vishwanath", "Sarnath", "Boat ride")),
+    DestinationProfile("Agra", "India", ("heritage", "architecture", "history"), 2400, "Taj Mahal, Mughal forts, history", "https://images.unsplash.com/photo-1564507592228-028a30dbf9b7?auto=format&fit=crop&w=1200&q=80", ("Taj Mahal", "Agra Fort", "Fatehpur Sikri", "Mehtab Bagh")),
+    DestinationProfile("Andaman", "India", ("beach", "adventure", "nature"), 4500, "white sand beaches, scuba diving, islands", "https://images.unsplash.com/photo-1589394815804-964ce0fa5710?auto=format&fit=crop&w=1200&q=80", ("Radhanagar Beach", "Cellular Jail", "Scuba Diving", "Havelock Island")),
+    DestinationProfile("Munnar", "India", ("mountains", "tea", "nature"), 2800, "rolling hills, tea museums, cool breeze", "https://images.unsplash.com/photo-1593693397690-362cb9666cf2?auto=format&fit=crop&w=1200&q=80", ("Tea Museum", "Mattupetty Dam", "Echo Point", "Anamudi Peak")),
+    DestinationProfile("Jaisalmer", "India", ("desert", "heritage", "adventure"), 2700, "sand dunes, golden forts, camel safaris", "https://images.unsplash.com/photo-1586822264906-aa924faff722?auto=format&fit=crop&w=1200&q=80", ("Jaisalmer Fort", "Sam Sand Dunes", "Patwon Ki Haveli", "Desert Safari")),
+    DestinationProfile("Shimla", "India", ("mountains", "heritage", "shopping"), 3100, "colonial architecture, snow, mall road", "https://images.unsplash.com/photo-1596700688647-3866164bc77d?auto=format&fit=crop&w=1200&q=80", ("Mall Road", "Jakhu Temple", "Ridge", "Toy Train")),
+    DestinationProfile("Ooty", "India", ("mountains", "nature", "heritage"), 2500, "botanical gardens, lakes, pine forests", "https://images.unsplash.com/photo-1623812239474-061030e2f59f?auto=format&fit=crop&w=1200&q=80", ("Botanical Garden", "Ooty Lake", "Doddabetta Peak", "Rose Garden")),
+    DestinationProfile("Srinagar", "India", ("mountains", "romantic", "nature"), 3600, "Dal Lake, shikaras, mughal gardens", "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1200&q=80", ("Dal Lake", "Shalimar Bagh", "Shikara Ride", "Gulmarg Day Trip")),
+    DestinationProfile("Mysore", "India", ("heritage", "culture", "shopping"), 2300, "palaces, silk sarees, rich culture", "https://images.unsplash.com/photo-1600100397608-f010f41cb8ac?auto=format&fit=crop&w=1200&q=80", ("Mysore Palace", "Chamundi Hill", "Brindavan Gardens", "Devaraja Market")),
+    DestinationProfile("Hampi", "India", ("heritage", "backpacking", "history"), 2100, "ancient ruins, boulder landscapes, history", "https://images.unsplash.com/photo-1620766182966-c6eb5ed2b788?auto=format&fit=crop&w=1200&q=80", ("Virupaksha Temple", "Matanga Hill", "Vitthala Temple", "Hippie Island")),
+    DestinationProfile("Pondicherry", "India", ("beach", "heritage", "cafes"), 2800, "french quarters, distinct cafes, promenades", "https://images.unsplash.com/photo-1616426462744-b04f326a0bd1?auto=format&fit=crop&w=1200&q=80", ("Promenade Beach", "Auroville", "French Colony", "Paradise Beach")),
+    DestinationProfile("Meghalaya", "India", ("nature", "adventure", "waterfalls"), 3200, "living root bridges, waterfalls, caves", "https://images.unsplash.com/photo-1634891442083-d55fc9d231b1?auto=format&fit=crop&w=1200&q=80", ("Double Decker Bridge", "Cherrapunji", "Dawki River", "Seven Sister Falls")),
 )
+
+from .csv_data import CSV_DESTINATIONS
+DESTINATIONS = DESTINATIONS + CSV_DESTINATIONS
 
 STYLE_MULTIPLIERS = {
     "budget": 0.78,
@@ -36,6 +51,15 @@ STYLE_MULTIPLIERS = {
 
 
 def list_destinations() -> list[Destination]:
+    import random
+    
+    # Return the premium hand-picked 16 + 4 random ones from CSV
+    premium = list(DESTINATIONS[:16])
+    others = list(DESTINATIONS[20:])
+    random.shuffle(others)
+    
+    display_list = premium + others[:4]
+    
     return [
         Destination(
             name=item.name,
@@ -46,7 +70,7 @@ def list_destinations() -> list[Destination]:
             image=item.image,
             highlights=list(item.highlights),
         )
-        for item in DESTINATIONS
+        for item in display_list
     ]
 
 
@@ -87,12 +111,16 @@ def _match_destination(query: str) -> DestinationProfile:
         if normalized in destination.name.lower() or destination.name.lower() in normalized:
             return destination
 
-    scored = sorted(
-        DESTINATIONS,
-        key=lambda item: len(set(normalized.split()) & set(item.name.lower().split())),
-        reverse=True,
+    # Dynamic fallback for ANY place the user types
+    return DestinationProfile(
+        name=query.strip().title(),
+        region="India",
+        tags=("culture", "exploring", "sightseeing"),
+        base_daily_cost=2500,
+        best_for="local experiences, authentic food, hidden gems",
+        image="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=80",
+        highlights=("City center walk", "Local markets", "Main temples/monuments", "Scenic viewpoints")
     )
-    return scored[0]
 
 
 def _build_daily_plan(destination: DestinationProfile, request: ItineraryRequest, per_day_cost: int) -> list[DayPlan]:
