@@ -46,23 +46,3 @@ def get_itinerary(itinerary_id: int) -> dict:
     if itinerary is None:
         raise HTTPException(status_code=404, detail="Itinerary not found")
     return itinerary
-
-import os
-from fastapi.responses import FileResponse
-
-frontend_path = os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist", "travelai-planner", "browser")
-
-@app.get("/{catchall:path}")
-def serve_frontend(catchall: str):
-    if catchall.startswith("api/"):
-        raise HTTPException(status_code=404, detail="API route not found")
-    
-    file_path = os.path.join(frontend_path, catchall)
-    if catchall and os.path.isfile(file_path):
-        return FileResponse(file_path)
-    
-    index_path = os.path.join(frontend_path, "index.html")
-    if os.path.isfile(index_path):
-        return FileResponse(index_path)
-    
-    raise HTTPException(status_code=404, detail="Frontend not built")
