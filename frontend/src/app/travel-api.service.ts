@@ -8,7 +8,7 @@ import { isDevMode } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class TravelApiService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = isDevMode() ? 'http://localhost:8000/api' : '/api';
+  private readonly apiUrl = '/api';
 
   getDestinations() {
     return this.http.get<Destination[]>(`${this.apiUrl}/destinations`);
