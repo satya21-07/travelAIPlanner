@@ -24,6 +24,7 @@ export class TravelStateService {
 
   formVisible = true;
   historyVisible = false;
+  private readonly backendHost = globalThis.location?.hostname || 'localhost';
 
   form = this.fb.nonNullable.group({
     destination: ['Goa', [Validators.required, Validators.minLength(2)]],
@@ -105,7 +106,7 @@ export class TravelStateService {
     }
 
     if (error.status === 0) {
-      return 'Could not reach the backend at http://localhost:8000. Make sure the FastAPI server is running.';
+      return `Could not reach the backend at http://${this.backendHost}:8000. Make sure the FastAPI server is running and reachable from this device.`;
     }
 
     if (typeof error.error === 'string' && error.error.trim()) {
