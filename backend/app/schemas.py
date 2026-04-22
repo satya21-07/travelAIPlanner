@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ItineraryRequest(BaseModel):
@@ -28,6 +28,8 @@ class DayPlan(BaseModel):
 
 
 class ItineraryResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     destination: str
     start_location: Optional[str]
@@ -43,9 +45,6 @@ class ItineraryResponse(BaseModel):
     cost_breakdown: dict[str, float]
     tips: list[str]
     created_at: Optional[datetime] = None
-
-    class Config:
-        orm_mode = True
 
 
 class Destination(BaseModel):

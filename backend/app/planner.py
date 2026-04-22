@@ -101,7 +101,7 @@ def build_plan(request: ItineraryRequest) -> dict:
         "interests": request.interests,
         "summary": f"{request.days} days in {destination.name}, planned {fit_message} for {request.travelers} traveler(s). Expect {destination.best_for}.",
         "total_estimated_cost": total_estimated_cost,
-        "daily_plan": [day.dict() for day in daily_plan],
+        "daily_plan": [day.model_dump() for day in daily_plan],
         "cost_breakdown": cost_breakdown,
         "tips": _tips(destination, request, total_estimated_cost),
     }
