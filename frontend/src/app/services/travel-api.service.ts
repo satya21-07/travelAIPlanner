@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, isDevMode } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Destination, Itinerary, ItineraryPayload } from '../travel.types';
 @Injectable({ providedIn: 'root' })
 export class TravelApiService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = isDevMode() ? this.buildDevApiUrl() : '/api';
+  private readonly apiUrl = this.resolveApiUrl();
 
   getDestinations() {
     return this.http.get<Destination[]>(`${this.apiUrl}/destinations`);
@@ -19,8 +19,17 @@ export class TravelApiService {
     return this.http.post<Itinerary>(`${this.apiUrl}/itineraries`, payload);
   }
 
-  private buildDevApiUrl(): string {
-    const hostname = globalThis.location?.hostname || 'localhost';
-    return `http://${hostname}:8000/api`;
+  private resolveApiUrl(): string {
+    const location = globalThis.location;
+    if (!location) {
+      return '/api';
+    }
+
+    const isAngularDevServer = location.port === '4200';
+    if (isAngularDevServer) {
+      return `http://${location.hostname}:8000/api`;
+    }
+
+    return '/api';
   }
 }

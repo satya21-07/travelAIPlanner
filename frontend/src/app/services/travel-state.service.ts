@@ -24,7 +24,7 @@ export class TravelStateService {
 
   formVisible = true;
   historyVisible = false;
-  private readonly backendHost = globalThis.location?.hostname || 'localhost';
+  private readonly apiBaseUrl = this.resolveApiBaseUrl();
 
   form = this.fb.nonNullable.group({
     destination: ['Goa', [Validators.required, Validators.minLength(2)]],
@@ -106,7 +106,7 @@ export class TravelStateService {
     }
 
     if (error.status === 0) {
-      return `Could not reach the backend at http://${this.backendHost}:8000. Make sure the FastAPI server is running and reachable from this device.`;
+      return `Could not reach the backend at ${this.apiBaseUrl}. Make sure the API is running and reachable from this device.`;
     }
 
     if (typeof error.error === 'string' && error.error.trim()) {
@@ -114,5 +114,18 @@ export class TravelStateService {
     }
 
     return `Could not create the itinerary${error.status ? ` (${error.status})` : ''}.`;
+  }
+
+  private resolveApiBaseUrl(): string {
+    const location = globalThis.location;
+    if (!location) {
+      return '/api';
+    }
+
+    if (location.port === '4200') {
+      return `http://${location.hostname}:8000/api`;
+    }
+
+    return `${location.origin}/api`;
   }
 }
