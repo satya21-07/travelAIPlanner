@@ -44,7 +44,8 @@ class ItineraryResponse(BaseModel):
     tips: list[str]
     created_at: Optional[datetime] = None
 
-    model_config = {"from_attributes": True}
+    class Config:
+        orm_mode = True
 
 
 class Destination(BaseModel):
