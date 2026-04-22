@@ -18,7 +18,7 @@ class DestinationProfile:
 
 
 DESTINATIONS: tuple[DestinationProfile, ...] = (
-    DestinationProfile("Goa", "India", ("beach", "nightlife", "food"), 3200, "beaches, seafood, easy scooters", "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800", ("Fontainhas walk", "Baga beach", "Dudhsagar day trip", "Anjuna market"), "https://www.w3schools.com/html/mov_bbb.mp4"),
+    DestinationProfile("Goa", "India", ("beach", "nightlife", "food"), 3200, "beaches, seafood, easy scooters", "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800", ("Fontainhas walk", "Baga beach", "Dudhsagar day trip", "Anjuna market"), "https://cdn.coverr.co/videos/mp4/coverr-boat-on-the-lake-5201/1080p.mp4"),
     DestinationProfile("Jaipur", "India", ("heritage", "shopping", "food"), 2600, "forts, bazaars, royal architecture", "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800", ("Amber Fort", "City Palace", "Hawa Mahal", "Johri Bazaar"), "https://cdn.coverr.co/videos/mp4/coverr-royal-palace-in-india-5645/1080p.mp4"),
     DestinationProfile("Manali", "India", ("mountains", "adventure", "nature"), 3000, "snow views, cafes, adventure sports", "https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=800", ("Old Manali", "Solang Valley", "Hadimba Temple", "Jogini Falls"), "https://cdn.coverr.co/videos/mp4/coverr-snowy-mountain-range-5345/1080p.mp4"),
     DestinationProfile("Rishikesh", "India", ("adventure", "spiritual", "nature"), 2200, "rafting, yoga, riverside stays", "https://images.unsplash.com/photo-1591017403286-fd8493524e1e?w=800", ("Ganga aarti", "River rafting", "Beatles Ashram", "Lakshman Jhula"), "https://cdn.coverr.co/videos/mp4/coverr-river-in-the-mountains-5341/1080p.mp4"),
