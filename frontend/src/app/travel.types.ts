@@ -4,6 +4,7 @@ export interface Destination {
   base_daily_cost: number;
   best_for: string;
   image: string;
+  video?: string;
 }
 
 export interface DayPlan {

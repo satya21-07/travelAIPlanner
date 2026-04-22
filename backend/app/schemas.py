@@ -54,6 +54,7 @@ class Destination(BaseModel):
     base_daily_cost: int
     best_for: str
     image: str
+    video: Optional[str] = None
     highlights: list[str]
 
 

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
-import { Itinerary } from './travel.types';
+import { Itinerary } from '../../travel.types';
 
 @Component({
   selector: 'app-history-strip',

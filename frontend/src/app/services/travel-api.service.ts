@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
-import { Destination, Itinerary, ItineraryPayload } from './travel.types';
+import { Destination, Itinerary, ItineraryPayload } from '../travel.types';
 
 import { isDevMode } from '@angular/core';
 

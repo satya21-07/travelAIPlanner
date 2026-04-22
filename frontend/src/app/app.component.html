@@ -2,23 +2,58 @@
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
 
-  <app-planner-form
-    [form]="form"
-    [loading]="loading"
-    [error]="error"
-    (submitPlan)="createPlan()"
-  />
+  <div class="nav-controls">
+    <button 
+      *ngIf="state.selectedPlan$ | async"
+      class="control-btn form-toggle" 
+      [class.is-collapsed]="!state.formVisible"
+      (click)="state.formVisible = !state.formVisible"
+      aria-label="Toggle planner form"
+    >
+      <span class="icon">{{ state.formVisible ? '×' : '✎' }}</span>
+      <span class="label">{{ state.formVisible ? 'Close' : 'Edit Plan' }}</span>
+    </button>
 
-  <app-itinerary-result [plan]="selectedPlan" />
+    <button 
+      class="control-btn history-toggle" 
+      [class.active]="state.historyVisible"
+      (click)="state.historyVisible = !state.historyVisible"
+      aria-label="Toggle history slider"
+    >
+      <span class="icon">🕒</span>
+      <span class="label">History</span>
+    </button>
+  </div>
+
+  <div class="main-grid" [class.form-hidden]="!state.formVisible">
+    <app-planner-form
+      *ngIf="state.formVisible"
+      [form]="state.form"
+      [loading]="(state.loading$ | async) || false"
+      [error]="(state.error$ | async) || ''"
+      (submitPlan)="state.createPlan()"
+    />
+
+    <app-itinerary-result 
+      [plan]="state.selectedPlan$ | async" 
+      [class.full-width]="!state.formVisible"
+    />
+  </div>
 
   <app-destination-gallery
-    [destinations]="destinations"
-    (choose)="useDestination($event)"
+    *ngIf="state.formVisible"
+    [destinations]="(state.destinations$ | async) || []"
+    (choose)="state.useDestination($event)"
   />
 
-  <app-history-strip
-    [plans]="history"
-    (selectPlan)="selectedPlan = $event"
-  />
+  <div class="history-drawer" [class.is-open]="state.historyVisible">
+    <div class="drawer-header">
+      <h3>Previous Plans</h3>
+      <button (click)="state.historyVisible = false">×</button>
+    </div>
+    <app-history-strip
+      [plans]="(state.history$ | async) || []"
+      (selectPlan)="state.selectFromHistory($event)"
+    />
+  </div>
 </main>
-

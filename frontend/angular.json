@@ -18,7 +18,7 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [],
+            "assets": ["src/assets"],
             "styles": ["src/styles.css"],
             "scripts": []
           },
@@ -42,7 +42,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {"buildTarget": "travelai-planner:build:production"},
-            "development": {"buildTarget": "travelai-planner:build:development"}
+            "development": {
+              "buildTarget": "travelai-planner:build:development",
+              "proxyConfig": "proxy.conf.json"
+            }
           },
           "defaultConfiguration": "development"
         }

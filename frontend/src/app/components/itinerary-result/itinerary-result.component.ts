@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
-import { DayPlan, Itinerary } from './travel.types';
+import { DayPlan, Itinerary } from '../../travel.types';
 
 @Component({
   selector: 'app-itinerary-result',
