@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject, finalize } from 'rxjs';
 import { TravelApiService } from './travel-api.service';
@@ -61,7 +62,7 @@ export class TravelStateService {
           this.historySubject.next([plan, ...currentHistory.filter(h => h.id !== plan.id)].slice(0, 8));
           this.formVisible = false;
         },
-        error: () => this.errorSubject.next('Could not create the itinerary. Make sure the backend is running on port 8000.')
+        error: (error: HttpErrorResponse) => this.errorSubject.next(this.formatApiError(error))
       });
   }
 
@@ -91,5 +92,26 @@ export class TravelStateService {
       next: (items) => this.historySubject.next(items),
       error: () => this.historySubject.next([])
     });
+  }
+
+  private formatApiError(error: HttpErrorResponse): string {
+    const detail = error.error?.detail;
+    if (typeof detail === 'string' && detail.trim()) {
+      return detail;
+    }
+
+    if (typeof error.error?.message === 'string' && error.error.message.trim()) {
+      return error.error.message;
+    }
+
+    if (error.status === 0) {
+      return 'Could not reach the backend at http://localhost:8000. Make sure the FastAPI server is running.';
+    }
+
+    if (typeof error.error === 'string' && error.error.trim()) {
+      return error.error;
+    }
+
+    return `Could not create the itinerary${error.status ? ` (${error.status})` : ''}.`;
   }
 }
