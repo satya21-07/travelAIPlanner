@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Travel destination fallback image</title>
+  <desc id="desc">A scenic illustrated landscape with hills, sun, and water.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#16324f"/>
+      <stop offset="55%" stop-color="#2f6f8f"/>
+      <stop offset="100%" stop-color="#f0b45a"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#1d5f74"/>
+      <stop offset="100%" stop-color="#0e3446"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="930" cy="158" r="86" fill="#ffd68a" opacity="0.92"/>
+  <path d="M0 484c86-23 144-15 222 21 77 36 139 44 214 10 74-34 134-44 213-9 80 35 151 39 243 4 93-35 169-32 308 15V800H0Z" fill="#264b43"/>
+  <path d="M0 575c94-28 173-18 247 17 74 35 131 42 207 14 76-28 145-31 230 14 84 45 165 46 260 3 95-44 172-51 256-18V800H0Z" fill="#3f6d57"/>
+  <path d="M0 634c120-18 239 1 341 44 102 43 196 49 298 12 102-37 214-43 331-5 78 25 155 30 230 17V800H0Z" fill="url(#water)"/>
+  <path d="M208 288 316 178l84 95 48-40 105 111H208Z" fill="#d6e0d6" opacity="0.72"/>
+  <path d="M725 322 852 188l95 117 54-50 127 137H725Z" fill="#dbe4d3" opacity="0.55"/>
+  <text x="86" y="124" fill="#fff9ed" font-family="Georgia, serif" font-size="64">TravelAI</text>
+  <text x="88" y="184" fill="#f8ead2" font-family="Arial, sans-serif" font-size="28" letter-spacing="4">DESTINATION PREVIEW</text>
+</svg>

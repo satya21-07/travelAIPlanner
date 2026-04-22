@@ -20,7 +20,14 @@
         >
           <source [src]="destination.video" type="video/mp4">
         </video>
-        <img *ngIf="!destination.video" [src]="destination.image" [alt]="destination.name" loading="eager" crossorigin="anonymous">
+        <img
+          *ngIf="!destination.video"
+          [src]="destination.image"
+          [alt]="destination.name"
+          loading="eager"
+          crossorigin="anonymous"
+          (error)="useFallbackImage($event)"
+        >
         <div class="card-overlay"></div>
       </div>
       <div class="content">

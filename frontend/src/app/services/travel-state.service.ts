@@ -13,12 +13,14 @@ export class TravelStateService {
   private readonly loadingSubject = new BehaviorSubject<boolean>(false);
   private readonly errorSubject = new BehaviorSubject<string>('');
   private readonly destinationsSubject = new BehaviorSubject<Destination[]>([]);
+  private readonly allDestinationsSubject = new BehaviorSubject<Destination[]>([]);
   private readonly historySubject = new BehaviorSubject<Itinerary[]>([]);
   private readonly selectedPlanSubject = new BehaviorSubject<Itinerary | null>(null);
   
   loading$ = this.loadingSubject.asObservable();
   error$ = this.errorSubject.asObservable();
   destinations$ = this.destinationsSubject.asObservable();
+  allDestinations$ = this.allDestinationsSubject.asObservable();
   history$ = this.historySubject.asObservable();
   selectedPlan$ = this.selectedPlanSubject.asObservable();
 
@@ -39,6 +41,7 @@ export class TravelStateService {
 
   init(): void {
     this.refreshDestinations();
+    this.refreshAllDestinations();
     this.refreshHistory();
   }
 
@@ -83,8 +86,29 @@ export class TravelStateService {
 
   private refreshDestinations(): void {
     this.api.getDestinations().subscribe({
-      next: (items) => this.destinationsSubject.next(items),
-      error: () => this.destinationsSubject.next([])
+      next: (items) => {
+        this.destinationsSubject.next(items);
+        if (!this.allDestinationsSubject.value.length) {
+          this.allDestinationsSubject.next(items);
+        }
+      },
+      error: () => {
+        this.destinationsSubject.next([]);
+        if (!this.allDestinationsSubject.value.length) {
+          this.allDestinationsSubject.next([]);
+        }
+      }
+    });
+  }
+
+  private refreshAllDestinations(): void {
+    this.api.getAllDestinations().subscribe({
+      next: (items) => this.allDestinationsSubject.next(items.length ? items : this.destinationsSubject.value),
+      error: () => {
+        if (!this.allDestinationsSubject.value.length) {
+          this.allDestinationsSubject.next(this.destinationsSubject.value);
+        }
+      }
     });
   }
 

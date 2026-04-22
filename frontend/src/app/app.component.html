@@ -1,4 +1,4 @@
-<main class="shell">
+<main class="shell" [class.history-open]="state.historyVisible">
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
 
@@ -29,6 +29,7 @@
     <app-planner-form
       *ngIf="state.formVisible"
       [form]="state.form"
+      [destinations]="(state.allDestinations$ | async) || []"
       [loading]="(state.loading$ | async) || false"
       [error]="(state.error$ | async) || ''"
       (submitPlan)="state.createPlan()"

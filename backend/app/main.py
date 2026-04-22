@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .database import get_itinerary as find_itinerary
 from .database import init_db, list_itineraries, save_itinerary
-from .planner import build_plan, list_destinations
+from .planner import build_plan, list_all_destinations, list_destinations
 from .schemas import Destination, ItineraryRequest, ItineraryResponse
 
 init_db()
@@ -28,6 +28,11 @@ def health() -> dict[str, str]:
 @app.get("/api/destinations", response_model=list[Destination])
 def destinations() -> list[Destination]:
     return list_destinations()
+
+
+@app.get("/api/destinations/all", response_model=list[Destination])
+def all_destinations() -> list[Destination]:
+    return list_all_destinations()
 
 
 @app.post("/api/itineraries", response_model=ItineraryResponse, status_code=201)

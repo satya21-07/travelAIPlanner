@@ -22,6 +22,17 @@ import { Destination } from '../../travel.types';
   ],
 })
 export class DestinationGalleryComponent {
+  readonly fallbackImage = 'assets/destination-fallback.svg';
+
   @Input() destinations: Destination[] = [];
   @Output() choose = new EventEmitter<Destination>();
+
+  useFallbackImage(event: Event): void {
+    const image = event.target as HTMLImageElement | null;
+    if (!image || image.src.endsWith(this.fallbackImage)) {
+      return;
+    }
+
+    image.src = this.fallbackImage;
+  }
 }

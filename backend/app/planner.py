@@ -76,6 +76,34 @@ def list_destinations() -> list[Destination]:
     ]
 
 
+def list_all_destinations() -> list[Destination]:
+    seen: set[str] = set()
+    unique_destinations: list[DestinationProfile] = []
+
+    for item in DESTINATIONS:
+        normalized_name = item.name.strip().lower()
+        if normalized_name in seen:
+            continue
+        seen.add(normalized_name)
+        unique_destinations.append(item)
+
+    unique_destinations.sort(key=lambda item: item.name.lower())
+
+    return [
+        Destination(
+            name=item.name,
+            region=item.region,
+            tags=list(item.tags),
+            base_daily_cost=item.base_daily_cost,
+            best_for=item.best_for,
+            image=item.image,
+            video=item.video,
+            highlights=list(item.highlights),
+        )
+        for item in unique_destinations
+    ]
+
+
 def build_plan(request: ItineraryRequest) -> dict:
     destination = _match_destination(request.destination)
     style_multiplier = STYLE_MULTIPLIERS.get(request.travel_style.lower(), 1.0)

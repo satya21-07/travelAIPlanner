@@ -5,10 +5,14 @@ import { Destination, Itinerary, ItineraryPayload } from '../travel.types';
 @Injectable({ providedIn: 'root' })
 export class TravelApiService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = '/api';
+  private readonly apiUrl = this.resolveApiUrl();
 
   getDestinations() {
     return this.http.get<Destination[]>(`${this.apiUrl}/destinations`);
+  }
+
+  getAllDestinations() {
+    return this.http.get<Destination[]>(`${this.apiUrl}/destinations/all`);
   }
 
   getItineraries() {

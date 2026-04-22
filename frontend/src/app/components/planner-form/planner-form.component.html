@@ -27,8 +27,56 @@
   </div>
 
   <form [formGroup]="form" (ngSubmit)="submitPlan.emit()" class="trip-form">
-    <label>Destination<input formControlName="destination" placeholder="Goa, Jaipur, Manali"></label>
-    <label>Starting from<input formControlName="start_location" placeholder="Delhi, Mumbai, Bengaluru"></label>
+    <label class="suggest-field">
+      Destination
+      <input
+        formControlName="destination"
+        placeholder="Goa, Jaipur, Manali"
+        autocomplete="off"
+        (focus)="openDestinationSuggestions()"
+        (input)="openDestinationSuggestions()"
+        (blur)="closeDestinationSuggestions()"
+      >
+      <div
+        class="suggestions-menu"
+        *ngIf="showDestinationSuggestions && filteredDestinationSuggestions.length"
+      >
+        <button
+          type="button"
+          class="suggestion-item"
+          *ngFor="let destination of filteredDestinationSuggestions"
+          (mousedown)="selectDestination(destination)"
+        >
+          <span>{{ destination.name }}</span>
+          <small>{{ destination.region }}</small>
+        </button>
+      </div>
+    </label>
+    <label class="suggest-field">
+      Starting from
+      <input
+        formControlName="start_location"
+        placeholder="Delhi, Mumbai, Bengaluru"
+        autocomplete="off"
+        (focus)="openStartLocationSuggestions()"
+        (input)="openStartLocationSuggestions()"
+        (blur)="closeStartLocationSuggestions()"
+      >
+      <div
+        class="suggestions-menu"
+        *ngIf="showStartLocationSuggestions && filteredStartLocationSuggestions.length"
+      >
+        <button
+          type="button"
+          class="suggestion-item"
+          *ngFor="let destination of filteredStartLocationSuggestions"
+          (mousedown)="selectStartLocation(destination)"
+        >
+          <span>{{ destination.name }}</span>
+          <small>{{ destination.region }}</small>
+        </button>
+      </div>
+    </label>
 
     <div class="grid-3">
       <label>Days<input type="number" formControlName="days" min="1" max="21"></label>
@@ -64,4 +112,3 @@
     <p class="error" *ngIf="error">{{ error }}</p>
   </form>
 </section>
-
