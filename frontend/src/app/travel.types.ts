@@ -17,6 +17,12 @@ export interface DayPlan {
   estimated_cost: number;
 }
 
+export interface PlaceRecommendation {
+  name: string;
+  description: string;
+  why_visit: string;
+}
+
 export interface Itinerary {
   id: number;
   destination: string;
@@ -30,6 +36,7 @@ export interface Itinerary {
   summary: string;
   total_estimated_cost: number;
   daily_plan: DayPlan[];
+  places?: PlaceRecommendation[];
   cost_breakdown: Record<string, number>;
   tips: string[];
   created_at: string | null;
@@ -45,4 +52,3 @@ export interface ItineraryPayload {
   travel_style: string;
   interests: string[];
 }
-

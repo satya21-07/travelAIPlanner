@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+from .config import get_api_key
 from .database import get_itinerary as find_itinerary
 from .database import init_db, list_itineraries, save_itinerary
 from .planner import build_plan, list_all_destinations, list_destinations
@@ -22,7 +23,10 @@ app.add_middleware(
 
 @app.get("/api/health")
 def health() -> dict[str, str]:
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "apiKeyConfigured": "yes" if get_api_key() else "no",
+    }
 
 
 @app.get("/api/destinations", response_model=list[Destination])

@@ -420,6 +420,13 @@ button {
   margin: 0 0 12px 0;
 }
 
+.day-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
 .day-slots {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));

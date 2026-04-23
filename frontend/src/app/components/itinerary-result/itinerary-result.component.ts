@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
-import { DayPlan, Itinerary } from '../../travel.types';
+import { DayPlan, Itinerary, PlaceRecommendation } from '../../travel.types';
 
 @Component({
   selector: 'app-itinerary-result',
@@ -33,6 +33,14 @@ export class ItineraryResultComponent {
   visibleStart = 0;
 
   @Input() plan: Itinerary | null = null;
+
+  placeList(plan: Itinerary): PlaceRecommendation[] {
+    return plan.places ?? [];
+  }
+
+  hasPlaces(plan: Itinerary): boolean {
+    return this.placeList(plan).length > 0;
+  }
 
   costItems(plan: Itinerary): [string, number][] {
     return Object.entries(plan.cost_breakdown);

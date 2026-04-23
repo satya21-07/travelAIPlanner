@@ -27,6 +27,12 @@ class DayPlan(BaseModel):
     estimated_cost: float
 
 
+class PlaceRecommendation(BaseModel):
+    name: str
+    description: str
+    why_visit: str
+
+
 class ItineraryResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -42,6 +48,7 @@ class ItineraryResponse(BaseModel):
     summary: str
     total_estimated_cost: float
     daily_plan: list[DayPlan]
+    places: list[PlaceRecommendation] = Field(default_factory=list)
     cost_breakdown: dict[str, float]
     tips: list[str]
     created_at: Optional[datetime] = None

@@ -34,6 +34,27 @@
     </div>
   </div>
 
+  <div class="days" *ngIf="hasPlaces(plan); else dayTimeline" @listIn>
+    <article *ngFor="let place of placeList(plan); let index = index">
+      <div class="day-marker">
+        <span>{{ index + 1 }}</span>
+      </div>
+      <div class="day-card">
+        <div class="day-card-head">
+          <div>
+            <small>Top Place</small>
+            <h3>{{ place.name }}</h3>
+          </div>
+        </div>
+        <div class="day-slots">
+          <p><span>Description</span>{{ place.description }}</p>
+          <p><span>Why Visit</span>{{ place.why_visit }}</p>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <ng-template #dayTimeline>
   <div class="days timeline timeline-viewport" (scroll)="onTimelineScroll($event)" @listIn>
     <div class="timeline-spacer" [style.height.px]="topSpacerHeight()"></div>
     <article *ngFor="let day of renderedDays(plan)">
@@ -58,6 +79,7 @@
     </article>
     <div class="timeline-spacer" [style.height.px]="bottomSpacerHeight(plan)"></div>
   </div>
+  </ng-template>
 
   <div class="tips" @listIn>
     <div>
@@ -78,4 +100,3 @@
     </div>
   </section>
 </ng-template>
-

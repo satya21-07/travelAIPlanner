@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from .schemas import DayPlan, Destination, ItineraryRequest
+from .travel_recommendation import fetch_recommendations
 
 
 @dataclass(frozen=True)
@@ -106,6 +107,10 @@ def list_all_destinations() -> list[Destination]:
 
 def build_plan(request: ItineraryRequest) -> dict:
     destination = _match_destination(request.destination)
+    recommendations = fetch_recommendations(destination.name)
+    if "error" not in recommendations:
+        return _build_ai_plan(request, destination, recommendations)
+
     style_multiplier = STYLE_MULTIPLIERS.get(request.travel_style.lower(), 1.0)
     daily_cost = destination.base_daily_cost * style_multiplier * request.travelers
     activities_total = max(500, request.days * 450 * request.travelers)
@@ -130,8 +135,84 @@ def build_plan(request: ItineraryRequest) -> dict:
         "summary": f"{request.days} days in {destination.name}, planned {fit_message} for {request.travelers} traveler(s). Expect {destination.best_for}.",
         "total_estimated_cost": total_estimated_cost,
         "daily_plan": [day.model_dump() for day in daily_plan],
+        "places": [],
         "cost_breakdown": cost_breakdown,
         "tips": _tips(destination, request, total_estimated_cost),
+    }
+
+
+def _build_ai_plan(
+    request: ItineraryRequest,
+    destination: DestinationProfile,
+    recommendations: dict,
+) -> dict:
+    places = recommendations["places"]
+    place_count = max(1, len(places))
+    total_estimated_cost = round(
+        min(
+            request.budget,
+            destination.base_daily_cost * request.days * request.travelers
+            + (place_count * 300),
+        )
+    )
+
+    cost_breakdown = {
+        "stay": round(total_estimated_cost * 0.35),
+        "food": round(total_estimated_cost * 0.18),
+        "local_transport": round(total_estimated_cost * 0.15),
+        "activities": round(total_estimated_cost * 0.24),
+        "buffer": round(total_estimated_cost * 0.08),
+    }
+
+    daily_plan = [
+        DayPlan(
+            day=index + 1,
+            title=place["name"],
+            morning=place["description"],
+            afternoon=place["why_visit"],
+            evening=f"Wrap up the day with a relaxed local walk in {destination.name}.",
+            food=f"Try a well-rated local restaurant near {place['name']}.",
+            estimated_cost=round(total_estimated_cost / max(1, request.days)),
+        )
+        for index, place in enumerate(places[: request.days])
+    ]
+
+    if len(daily_plan) < request.days and places:
+        while len(daily_plan) < request.days:
+            place = places[len(daily_plan) % len(places)]
+            daily_plan.append(
+                DayPlan(
+                    day=len(daily_plan) + 1,
+                    title=f"{place['name']} and nearby exploring",
+                    morning=place["description"],
+                    afternoon=place["why_visit"],
+                    evening=f"Keep the evening flexible for shopping, cafes, or viewpoints in {destination.name}.",
+                    food=f"Pick a local specialty meal around {place['name']}.",
+                    estimated_cost=round(total_estimated_cost / max(1, request.days)),
+                )
+            )
+
+    top_place_names = ", ".join(place["name"] for place in places[:3])
+
+    return {
+        "destination": recommendations.get("location", destination.name),
+        "start_location": request.start_location,
+        "days": request.days,
+        "travelers": request.travelers,
+        "budget": request.budget,
+        "currency": request.currency.upper(),
+        "travel_style": request.travel_style,
+        "interests": request.interests,
+        "summary": f"AI-picked highlights for {destination.name}: {top_place_names}.",
+        "total_estimated_cost": total_estimated_cost,
+        "daily_plan": [day.model_dump() for day in daily_plan],
+        "places": places,
+        "cost_breakdown": cost_breakdown,
+        "tips": [
+            f"Start with {places[0]['name']} early to avoid crowds." if places else f"Start early in {destination.name} for a smoother day.",
+            "Cluster nearby attractions on the same day to save travel time.",
+            "Keep some buffer for entry tickets, local transport, and food stops.",
+        ],
     }
 
 
