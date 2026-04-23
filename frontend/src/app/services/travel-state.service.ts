@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject, finalize } from 'rxjs';
 import { TravelApiService } from './travel-api.service';
-import { Destination, Itinerary, ItineraryPayload } from '../travel.types';
+import { Destination, HotelOption, Itinerary, ItineraryPayload } from '../travel.types';
 
 @Injectable({ providedIn: 'root' })
 export class TravelStateService {
@@ -84,6 +84,19 @@ export class TravelStateService {
     this.historyVisible = false;
   }
 
+  selectHotel(hotel: HotelOption): void {
+    const currentPlan = this.selectedPlanSubject.value;
+    if (!currentPlan) {
+      return;
+    }
+
+    const updatedPlan = this.recalculatePlanForHotel(currentPlan, hotel);
+    this.selectedPlanSubject.next(updatedPlan);
+    this.historySubject.next(
+      this.historySubject.value.map((plan) => plan.id === updatedPlan.id ? updatedPlan : plan)
+    );
+  }
+
   private refreshDestinations(): void {
     this.api.getDestinations().subscribe({
       next: (items) => {
@@ -151,5 +164,47 @@ export class TravelStateService {
     }
 
     return `${location.origin}/api`;
+  }
+
+  private recalculatePlanForHotel(plan: Itinerary, hotel: HotelOption): Itinerary {
+    const roomsRequired = plan.rooms_required || Math.max(1, Math.ceil(plan.travelers / 2));
+    const stayTotal = Math.round(hotel.price_per_night * plan.days * roomsRequired);
+    const nonStayKeys = ['food', 'local_transport', 'activities', 'buffer'] as const;
+    const originalOtherTotal = nonStayKeys.reduce((sum, key) => sum + (plan.cost_breakdown[key] || 0), 0);
+    const maxOtherBudget = Math.max(0, plan.budget - stayTotal);
+
+    const nextCostBreakdown: Record<string, number> = {
+      ...plan.cost_breakdown,
+      stay: stayTotal,
+    };
+
+    if (originalOtherTotal <= maxOtherBudget) {
+      for (const key of nonStayKeys) {
+        nextCostBreakdown[key] = Math.round(plan.cost_breakdown[key] || 0);
+      }
+    } else {
+      const scale = originalOtherTotal > 0 ? maxOtherBudget / originalOtherTotal : 0;
+      let allocated = 0;
+      for (const key of nonStayKeys) {
+        const value = Math.round((plan.cost_breakdown[key] || 0) * scale);
+        nextCostBreakdown[key] = value;
+        allocated += value;
+      }
+
+      const diff = Math.round(maxOtherBudget - allocated);
+      nextCostBreakdown['buffer'] = Math.max(0, (nextCostBreakdown['buffer'] || 0) + diff);
+    }
+
+    const totalEstimatedCost = Object.values(nextCostBreakdown).reduce((sum, value) => sum + value, 0);
+    const hotels = (plan.hotels || []).map((item) => item.name === hotel.name ? hotel : item);
+
+    return {
+      ...plan,
+      hotels,
+      selected_hotel: hotel,
+      cost_breakdown: nextCostBreakdown,
+      total_estimated_cost: totalEstimatedCost,
+      summary: `${plan.destination} with ${hotel.name} selected for your stay.`,
+    };
   }
 }

@@ -23,6 +23,15 @@ export interface PlaceRecommendation {
   why_visit: string;
 }
 
+export interface HotelOption {
+  name: string;
+  price_per_night: number;
+  rating: number;
+  amenities: string[];
+  lat?: number | null;
+  lon?: number | null;
+}
+
 export interface Itinerary {
   id: number;
   destination: string;
@@ -37,6 +46,9 @@ export interface Itinerary {
   total_estimated_cost: number;
   daily_plan: DayPlan[];
   places?: PlaceRecommendation[];
+  hotels?: HotelOption[];
+  selected_hotel?: HotelOption | null;
+  rooms_required?: number;
   cost_breakdown: Record<string, number>;
   tips: string[];
   created_at: string | null;

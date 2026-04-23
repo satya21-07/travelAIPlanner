@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from .schemas import DayPlan, Destination, ItineraryRequest
+from .hotel_recommendation import get_hotels
 from .travel_recommendation import fetch_recommendations
 
 
@@ -50,6 +51,8 @@ STYLE_MULTIPLIERS = {
     "comfort": 1.28,
     "luxury": 1.75,
 }
+
+NON_STAY_KEYS = ("food", "local_transport", "activities", "buffer")
 
 
 def list_destinations() -> list[Destination]:
@@ -109,7 +112,8 @@ def build_plan(request: ItineraryRequest) -> dict:
     destination = _match_destination(request.destination)
     recommendations = fetch_recommendations(destination.name)
     if "error" not in recommendations:
-        return _build_ai_plan(request, destination, recommendations)
+        plan = _build_ai_plan(request, destination, recommendations)
+        return _attach_hotels(plan, request, destination)
 
     style_multiplier = STYLE_MULTIPLIERS.get(request.travel_style.lower(), 1.0)
     daily_cost = destination.base_daily_cost * style_multiplier * request.travelers
@@ -123,7 +127,7 @@ def build_plan(request: ItineraryRequest) -> dict:
     total_estimated_cost = round(sum(cost_breakdown.values()))
     fit_message = "within your budget" if total_estimated_cost <= request.budget else "slightly above your budget"
 
-    return {
+    plan = {
         "destination": destination.name,
         "start_location": request.start_location,
         "days": request.days,
@@ -139,6 +143,7 @@ def build_plan(request: ItineraryRequest) -> dict:
         "cost_breakdown": cost_breakdown,
         "tips": _tips(destination, request, total_estimated_cost),
     }
+    return _attach_hotels(plan, request, destination)
 
 
 def _build_ai_plan(
@@ -214,6 +219,74 @@ def _build_ai_plan(
             "Keep some buffer for entry tickets, local transport, and food stops.",
         ],
     }
+
+
+def _attach_hotels(plan: dict, request: ItineraryRequest, destination: DestinationProfile) -> dict:
+    rooms_required = max(1, (request.travelers + 1) // 2)
+    nightly_budget = max(1200, round((request.budget * 0.45) / max(1, request.days * rooms_required)))
+
+    try:
+        hotel_payload = get_hotels(destination.name, nightly_budget)
+        hotels = hotel_payload.get("hotels", [])
+    except Exception:
+        hotels = []
+
+    plan["rooms_required"] = rooms_required
+    plan["hotels"] = hotels
+    plan["selected_hotel"] = None
+
+    if hotels:
+        selected_hotel = min(hotels, key=lambda hotel: hotel.get("price_per_night", 10**9))
+        plan["selected_hotel"] = selected_hotel
+        plan["cost_breakdown"], plan["total_estimated_cost"] = _rebalance_cost_breakdown(
+            plan["cost_breakdown"],
+            request.budget,
+            request.days,
+            rooms_required,
+            selected_hotel["price_per_night"],
+        )
+        plan["summary"] = (
+            f"{plan['summary']} Default stay: {selected_hotel['name']} "
+            f"at about {request.currency.upper()} {selected_hotel['price_per_night']} per night."
+        )
+
+    return plan
+
+
+def _rebalance_cost_breakdown(
+    cost_breakdown: dict[str, float],
+    budget: float,
+    days: int,
+    rooms_required: int,
+    selected_hotel_price_per_night: int,
+) -> tuple[dict[str, float], int]:
+    stay_total = round(selected_hotel_price_per_night * days * rooms_required)
+    remaining_budget = max(0, round(budget) - stay_total)
+    original_other_total = sum(round(cost_breakdown.get(key, 0)) for key in NON_STAY_KEYS)
+
+    adjusted_breakdown = dict(cost_breakdown)
+    adjusted_breakdown["stay"] = stay_total
+
+    if original_other_total <= 0:
+        for key in NON_STAY_KEYS:
+            adjusted_breakdown[key] = 0
+    elif original_other_total <= remaining_budget:
+        for key in NON_STAY_KEYS:
+            adjusted_breakdown[key] = round(cost_breakdown.get(key, 0))
+    else:
+        scale = remaining_budget / original_other_total if original_other_total else 0
+        allocated_total = 0
+        for key in NON_STAY_KEYS:
+            adjusted_value = round(cost_breakdown.get(key, 0) * scale)
+            adjusted_breakdown[key] = adjusted_value
+            allocated_total += adjusted_value
+
+        diff = remaining_budget - allocated_total
+        if diff:
+            adjusted_breakdown["buffer"] = max(0, adjusted_breakdown["buffer"] + diff)
+
+    total_estimated_cost = int(sum(round(value) for value in adjusted_breakdown.values()))
+    return adjusted_breakdown, total_estimated_cost
 
 
 def _match_destination(query: str) -> DestinationProfile:

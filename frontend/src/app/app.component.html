@@ -37,6 +37,7 @@
 
     <app-itinerary-result 
       [plan]="state.selectedPlan$ | async" 
+      (hotelSelected)="state.selectHotel($event)"
       [class.full-width]="!state.formVisible"
     />
   </div>

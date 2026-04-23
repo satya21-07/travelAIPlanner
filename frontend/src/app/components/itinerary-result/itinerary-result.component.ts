@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
-import { DayPlan, Itinerary, PlaceRecommendation } from '../../travel.types';
+import { DayPlan, HotelOption, Itinerary, PlaceRecommendation } from '../../travel.types';
 
 @Component({
   selector: 'app-itinerary-result',
@@ -31,8 +31,10 @@ export class ItineraryResultComponent {
   private readonly itemSize = 278;
   private readonly visibleCount = 6;
   visibleStart = 0;
+  hotelPickerOpen = false;
 
   @Input() plan: Itinerary | null = null;
+  @Output() hotelSelected = new EventEmitter<HotelOption>();
 
   placeList(plan: Itinerary): PlaceRecommendation[] {
     return plan.places ?? [];
@@ -40,6 +42,40 @@ export class ItineraryResultComponent {
 
   hasPlaces(plan: Itinerary): boolean {
     return this.placeList(plan).length > 0;
+  }
+
+  hotelList(plan: Itinerary): HotelOption[] {
+    return plan.hotels ?? [];
+  }
+
+  hasHotels(plan: Itinerary): boolean {
+    return this.hotelList(plan).length > 0;
+  }
+
+  selectedHotel(plan: Itinerary): HotelOption | null {
+    return plan.selected_hotel ?? this.hotelList(plan)[0] ?? null;
+  }
+
+  hotelTotal(plan: Itinerary, hotel: HotelOption): number {
+    const roomsRequired = plan.rooms_required || Math.max(1, Math.ceil(plan.travelers / 2));
+    return hotel.price_per_night * plan.days * roomsRequired;
+  }
+
+  openHotelPicker(): void {
+    this.hotelPickerOpen = true;
+  }
+
+  closeHotelPicker(): void {
+    this.hotelPickerOpen = false;
+  }
+
+  chooseHotel(hotel: HotelOption): void {
+    this.hotelSelected.emit(hotel);
+    this.hotelPickerOpen = false;
+  }
+
+  isStayItem(key: string): boolean {
+    return key === 'stay';
   }
 
   costItems(plan: Itinerary): [string, number][] {

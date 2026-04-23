@@ -33,6 +33,15 @@ class PlaceRecommendation(BaseModel):
     why_visit: str
 
 
+class HotelOption(BaseModel):
+    name: str
+    price_per_night: int
+    rating: float
+    amenities: list[str] = Field(default_factory=list)
+    lat: Optional[float]
+    lon: Optional[float]
+
+
 class ItineraryResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -49,6 +58,9 @@ class ItineraryResponse(BaseModel):
     total_estimated_cost: float
     daily_plan: list[DayPlan]
     places: list[PlaceRecommendation] = Field(default_factory=list)
+    hotels: list[HotelOption] = Field(default_factory=list)
+    selected_hotel: Optional[HotelOption] = None
+    rooms_required: int = 1
     cost_breakdown: dict[str, float]
     tips: list[str]
     created_at: Optional[datetime] = None

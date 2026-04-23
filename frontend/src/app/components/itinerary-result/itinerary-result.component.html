@@ -4,11 +4,7 @@
       <p class="eyebrow">Plan #{{ plan.id }}</p>
       <h2>{{ plan.destination }}</h2>
       <p>{{ plan.summary }}</p>
-      <div class="route-pills">
-        <span>{{ plan.days }} days</span>
-        <span>{{ plan.travelers }} travelers</span>
-        <span>{{ plan.travel_style }}</span>
-      </div>
+
     </div>
     <div class="price">
       <span>{{ plan.currency }}</span>
@@ -27,12 +23,46 @@
 
     <div class="costs" @listIn>
       <div class="cost-tile" *ngFor="let item of costItems(plan); let index = index" [style.--tile-index]="index">
-        <span>{{ labelize(item[0]) }}</span>
-        <strong>{{ plan.currency }} {{ item[1] | number:'1.0-0' }}</strong>
-        <i [style.width.%]="costPercent(plan, item[1])"></i>
+        <ng-container *ngIf="isStayItem(item[0]) && hasHotels(plan); else staticCostTile">
+          <button type="button" class="hotel-trigger" (click)="openHotelPicker()">
+            <span>{{ labelize(item[0]) }}</span>
+            <strong>{{ plan.currency }} {{ item[1] | number:'1.0-0' }}</strong>
+            <small *ngIf="selectedHotel(plan) as hotel">{{ hotel.name }}</small>
+            <i [style.width.%]="costPercent(plan, item[1])"></i>
+          </button>
+        </ng-container>
+        <ng-template #staticCostTile>
+          <span>{{ labelize(item[0]) }}</span>
+          <strong>{{ plan.currency }} {{ item[1] | number:'1.0-0' }}</strong>
+          <i [style.width.%]="costPercent(plan, item[1])"></i>
+        </ng-template>
       </div>
     </div>
   </div>
+
+  <section class="hotel-picker" *ngIf="hasHotels(plan) && hotelPickerOpen" @listIn>
+    <div class="hotel-picker-head">
+      <div>
+        <p class="eyebrow">Stay Options</p>
+        <h3>Choose your hotel</h3>
+      </div>
+      <button type="button" class="hotel-close" (click)="closeHotelPicker()">Close</button>
+    </div>
+    <div class="hotel-grid">
+      <button type="button" class="hotel-card" *ngFor="let hotel of hotelList(plan)" (click)="chooseHotel(hotel)">
+        <div class="hotel-card-head">
+          <div>
+            <strong>{{ hotel.name }}</strong>
+            <small>{{ hotel.rating | number:'1.1-1' }}/5 rating</small>
+          </div>
+          <span *ngIf="selectedHotel(plan)?.name === hotel.name" class="hotel-badge">Selected</span>
+        </div>
+        <p>{{ plan.currency }} {{ hotel.price_per_night | number:'1.0-0' }} / night</p>
+        <p>{{ plan.currency }} {{ hotelTotal(plan, hotel) | number:'1.0-0' }} total stay</p>
+        <p class="hotel-amenities">{{ hotel.amenities.join(', ') }}</p>
+      </button>
+    </div>
+  </section>
 
   <div class="days" *ngIf="hasPlaces(plan); else dayTimeline" @listIn>
     <article *ngFor="let place of placeList(plan); let index = index">
