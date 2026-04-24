@@ -156,7 +156,6 @@ body {
 }
 
 /* Animated Typography */
-.intro h1,
 .result-head h2,
 .destinations h2,
 .history h2 {
@@ -169,9 +168,41 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* 3D Text Masking Effect for Planner Form */
+.intro {
+  perspective: 1200px;
+}
+
 .intro h1 {
-  font-size: clamp(1.6rem, 2.5vw, 2.6rem);
+  font-size: clamp(2rem, 3.5vw, 3.6rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
   line-height: 1.1;
+  margin: 0 0 16px 0;
+  
+  /* Text Masking */
+  background: url('/assets/destinations/kerala.jpg') center/cover;
+  background-size: 150% 150%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  
+  /* 3D Effect */
+  transform-style: preserve-3d;
+  animation: text-mask-3d 12s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+}
+
+@keyframes text-mask-3d {
+  0% {
+    background-position: 0% 0%;
+    transform: rotateX(8deg) rotateY(-12deg) translateZ(20px);
+  }
+  100% {
+    background-position: 100% 100%;
+    transform: rotateX(-8deg) rotateY(12deg) translateZ(-10px);
+  }
 }
 
 .intro p,
@@ -327,6 +358,7 @@ button {
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 12px;
   margin: 20px 0;
+  perspective: 1000px;
 }
 
 .costs div {
@@ -336,13 +368,15 @@ button {
   border-radius: 16px;
   position: relative;
   overflow: hidden;
-  transition: all 0.4s var(--smooth-easing);
+  transform-style: preserve-3d;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .costs div:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px) scale(1.05) rotateX(10deg) rotateY(-8deg) translateZ(20px);
   background: rgba(255, 255, 255, 0.06);
   border-color: var(--accent-primary);
+  box-shadow: 15px 20px 30px -10px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(129, 140, 248, 0.2);
 }
 
 .costs div i {
@@ -468,6 +502,7 @@ button {
 .days {
   display: grid;
   gap: 14px;
+  perspective: 1200px;
 }
 
 .days article {
@@ -477,14 +512,15 @@ button {
   border-radius: 20px;
   display: flex;
   gap: 24px;
-  transition: all 0.5s var(--spring-easing);
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   animation: slideInRight 0.6s var(--smooth-easing) both;
 }
 
 .days article:hover {
-  transform: scale(1.02) translateX(10px);
+  transform: scale(1.02) rotateX(4deg) rotateY(-6deg) translateZ(15px);
   border-color: var(--accent-tertiary);
-  box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.5);
+  box-shadow: 20px 25px 40px -15px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(45, 212, 191, 0.1);
 }
 
 .day-marker {
@@ -575,15 +611,8 @@ button {
   mix-blend-mode: screen;
 }
 
-/* Premium Destination Cards */
-.destination-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
-  margin-top: 32px;
-}
-
-.destination-grid button {
+/* Premium Destination Carousel Cards */
+.carousel-item {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
@@ -594,19 +623,21 @@ button {
   flex-direction: column;
   position: relative;
   transition: all 0.4s var(--spring-easing);
+  transform-style: preserve-3d;
 }
 
-.destination-grid .img-wrapper {
+.carousel-item .img-wrapper {
   position: relative;
   width: 100%;
   height: 320px;
   overflow: hidden;
   background-color: #1e293b;
   z-index: 1;
+  transform: translateZ(0);
 }
 
-.destination-grid img,
-.destination-grid .motion-bg {
+.carousel-item img,
+.carousel-item .motion-bg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -616,11 +647,11 @@ button {
   transition: transform 0.8s var(--smooth-easing), filter 0.5s ease;
 }
 
-.destination-grid .motion-bg {
+.carousel-item .motion-bg {
   filter: brightness(0.8) contrast(1.1);
 }
 
-.destination-grid .card-overlay {
+.carousel-item .card-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 70%);
@@ -629,14 +660,15 @@ button {
   transition: opacity 0.3s ease;
 }
 
-.destination-grid .content {
+.carousel-item .content {
   padding: 24px;
   position: relative;
   z-index: 2;
   margin-top: -80px;
+  transform: translateZ(0);
 }
 
-.destination-grid span {
+.carousel-item span {
   color: #fff;
   font-size: 1.5rem;
   font-weight: 800;
@@ -645,28 +677,28 @@ button {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.destination-grid small {
+.carousel-item small {
   color: #cbd5e1;
   line-height: 1.5;
   font-size: 1rem;
   font-weight: 500;
 }
 
-.destination-grid button:hover {
+.carousel-item:hover {
   border-color: var(--accent-primary);
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
   transform: translateY(-8px);
 }
 
-.destination-grid button:hover img {
+.carousel-item:hover img {
   transform: scale(1.15);
 }
 
-.destination-grid button:hover .card-overlay {
+.carousel-item:hover .card-overlay {
   opacity: 0.9;
 }
 
-.destination-grid button::after {
+.carousel-item::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -681,7 +713,7 @@ button {
   transition: opacity 0.4s ease;
 }
 
-.destination-grid button:hover::after {
+.carousel-item:hover::after {
   opacity: 1;
 }
 

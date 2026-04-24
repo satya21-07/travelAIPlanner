@@ -20,26 +20,26 @@ class DestinationProfile:
 
 
 DESTINATIONS: tuple[DestinationProfile, ...] = (
-    DestinationProfile("Goa", "India", ("beach", "nightlife", "food"), 3200, "beaches, seafood, easy scooters", "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800", ("Fontainhas walk", "Baga beach", "Dudhsagar day trip", "Anjuna market"), "https://cdn.coverr.co/videos/mp4/coverr-boat-on-the-lake-5201/1080p.mp4"),
-    DestinationProfile("Jaipur", "India", ("heritage", "shopping", "food"), 2600, "forts, bazaars, royal architecture", "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800", ("Amber Fort", "City Palace", "Hawa Mahal", "Johri Bazaar"), "https://cdn.coverr.co/videos/mp4/coverr-royal-palace-in-india-5645/1080p.mp4"),
-    DestinationProfile("Manali", "India", ("mountains", "adventure", "nature"), 3000, "snow views, cafes, adventure sports", "https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=800", ("Old Manali", "Solang Valley", "Hadimba Temple", "Jogini Falls"), "https://cdn.coverr.co/videos/mp4/coverr-snowy-mountain-range-5345/1080p.mp4"),
-    DestinationProfile("Rishikesh", "India", ("adventure", "spiritual", "nature"), 2200, "rafting, yoga, riverside stays", "https://images.unsplash.com/photo-1591017403286-fd8493524e1e?w=800", ("Ganga aarti", "River rafting", "Beatles Ashram", "Lakshman Jhula"), "https://cdn.coverr.co/videos/mp4/coverr-river-in-the-mountains-5341/1080p.mp4"),
-    DestinationProfile("Kerala", "India", ("backwater", "nature", "wellness"), 3500, "houseboats, tea estates, slow travel", "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800", ("Alleppey backwaters", "Munnar tea gardens", "Fort Kochi", "Varkala cliff"), "https://cdn.coverr.co/videos/mp4/coverr-tropical-river-5346/1080p.mp4"),
-    DestinationProfile("Udaipur", "India", ("heritage", "romantic", "food"), 3100, "lakes, palaces, sunset dinners", "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?w=800", ("City Palace", "Lake Pichola", "Bagore Ki Haveli", "Sajjangarh"), "https://cdn.coverr.co/videos/mp4/coverr-palace-on-the-water-5205/1080p.mp4"),
-    DestinationProfile("Darjeeling", "India", ("mountains", "tea", "nature"), 2700, "tea gardens, sunrise points, toy train", "https://plus.unsplash.com/premium_photo-1697729440409-90d23588f28f?w=800", ("Tiger Hill", "Batasia Loop", "Tea estate", "Mall Road"), "https://cdn.coverr.co/videos/mp4/coverr-mountain-village-5343/1080p.mp4"),
-    DestinationProfile("Leh Ladakh", "India", ("adventure", "mountains", "roadtrip"), 4800, "high-altitude drives, monasteries, lakes", "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=800", ("Shanti Stupa", "Pangong Lake", "Khardung La", "Thiksey Monastery"), "https://cdn.coverr.co/videos/mp4/coverr-winding-mountain-road-5432/1080p.mp4"),
-    DestinationProfile("Varanasi", "India", ("spiritual", "culture", "heritage"), 2000, "Ganga Ghats, ancient temples, spiritual aura", "https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=800", ("Dashashwamedh Ghat", "Kashi Vishwanath", "Sarnath", "Boat ride"), "https://cdn.coverr.co/videos/mp4/coverr-ancient-temple-ritual-5561/1080p.mp4"),
-    DestinationProfile("Agra", "India", ("heritage", "architecture", "history"), 2400, "Taj Mahal, Mughal forts, history", "https://images.unsplash.com/photo-1548013146-72479768b921?w=800", ("Taj Mahal", "Agra Fort", "Fatehpur Sikri", "Mehtab Bagh"), "https://cdn.coverr.co/videos/mp4/coverr-majestic-palace-5645/1080p.mp4"),
-    DestinationProfile("Andaman", "India", ("beach", "adventure", "nature"), 4500, "white sand beaches, scuba diving, islands", "https://images.unsplash.com/photo-1537162998323-3d3675e0e87c?w=800", ("Radhanagar Beach", "Cellular Jail", "Scuba Diving", "Havelock Island"), "https://cdn.coverr.co/videos/mp4/coverr-tropical-beach-with-palms-5203/1080p.mp4"),
-    DestinationProfile("Munnar", "India", ("mountains", "tea", "nature"), 2800, "rolling hills, tea museums, cool breeze", "https://images.unsplash.com/photo-1593693397690-362cb9666cf2?w=800", ("Tea Museum", "Mattupetty Dam", "Echo Point", "Anamudi Peak"), "https://cdn.coverr.co/videos/mp4/coverr-tea-plantation-5541/1080p.mp4"),
-    DestinationProfile("Jaisalmer", "India", ("desert", "heritage", "adventure"), 2700, "sand dunes, golden forts, camel safaris", "https://images.unsplash.com/photo-1586822264906-aa924faff722?w=800", ("Jaisalmer Fort", "Sam Sand Dunes", "Patwon Ki Haveli", "Desert Safari"), "https://cdn.coverr.co/videos/mp4/coverr-desert-dunes-at-sunset-5208/1080p.mp4"),
-    DestinationProfile("Shimla", "India", ("mountains", "heritage", "shopping"), 3100, "colonial architecture, snow, mall road", "https://images.unsplash.com/photo-1596700688647-3866164bc77d?w=800", ("Mall Road", "Jakhu Temple", "Ridge", "Toy Train"), "https://cdn.coverr.co/videos/mp4/coverr-snowing-in-the-city-5347/1080p.mp4"),
-    DestinationProfile("Ooty", "India", ("mountains", "nature", "heritage"), 2500, "botanical gardens, lakes, pine forests", "https://images.unsplash.com/photo-1623812239474-061030e2f59f?w=800", ("Botanical Garden", "Ooty Lake", "Doddabetta Peak", "Rose Garden"), "https://cdn.coverr.co/videos/mp4/coverr-foggy-pine-forest-5544/1080p.mp4"),
-    DestinationProfile("Srinagar", "India", ("mountains", "romantic", "nature"), 3600, "Dal Lake, shikaras, mughal gardens", "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=800", ("Dal Lake", "Shalimar Bagh", "Shikara Ride", "Gulmarg Day Trip"), "https://cdn.coverr.co/videos/mp4/coverr-shikara-on-the-lake-5206/1080p.mp4"),
-    DestinationProfile("Mysore", "India", ("heritage", "culture", "shopping"), 2300, "palaces, silk sarees, rich culture", "https://images.unsplash.com/photo-1600100397608-f010f41cb8ac?w=800", ("Mysore Palace", "Chamundi Hill", "Brindavan Gardens", "Devaraja Market")),
-    DestinationProfile("Hampi", "India", ("heritage", "backpacking", "history"), 2100, "ancient ruins, boulder landscapes, history", "https://images.unsplash.com/photo-1620766182966-c6eb5ed2b788?w=800", ("Virupaksha Temple", "Matanga Hill", "Vitthala Temple", "Hippie Island")),
-    DestinationProfile("Pondicherry", "India", ("beach", "heritage", "cafes"), 2800, "french quarters, distinct cafes, promenades", "https://images.unsplash.com/photo-1616426462744-b04f326a0bd1?w=800", ("Promenade Beach", "Auroville", "French Colony", "Paradise Beach")),
-    DestinationProfile("Meghalaya", "India", ("nature", "adventure", "waterfalls"), 3200, "living root bridges, waterfalls, caves", "https://images.unsplash.com/photo-1634891442083-d55fc9d231b1?w=800", ("Double Decker Bridge", "Cherrapunji", "Dawki River", "Seven Sister Falls")),
+    DestinationProfile("Goa", "India", ("beach", "nightlife", "food"), 3200, "beaches, seafood, easy scooters", "assets/destinations/goa.jpg", ("Fontainhas walk", "Baga beach", "Dudhsagar day trip", "Anjuna market")),
+    DestinationProfile("Jaipur", "India", ("heritage", "shopping", "food"), 2600, "forts, bazaars, royal architecture", "assets/destinations/jaipur.jpg", ("Amber Fort", "City Palace", "Hawa Mahal", "Johri Bazaar")),
+    DestinationProfile("Manali", "India", ("mountains", "adventure", "nature"), 3000, "snow views, cafes, adventure sports", "assets/destinations/manali.jpg", ("Old Manali", "Solang Valley", "Hadimba Temple", "Jogini Falls")),
+    DestinationProfile("Rishikesh", "India", ("adventure", "spiritual", "nature"), 2200, "rafting, yoga, riverside stays", "assets/destinations/rishikesh.jpg", ("Ganga aarti", "River rafting", "Beatles Ashram", "Lakshman Jhula")),
+    DestinationProfile("Kerala", "India", ("backwater", "nature", "wellness"), 3500, "houseboats, tea estates, slow travel", "assets/destinations/kerala.jpg", ("Alleppey backwaters", "Munnar tea gardens", "Fort Kochi", "Varkala cliff")),
+    DestinationProfile("Udaipur", "India", ("heritage", "romantic", "food"), 3100, "lakes, palaces, sunset dinners", "assets/destinations/udaipur.jpg", ("City Palace", "Lake Pichola", "Bagore Ki Haveli", "Sajjangarh")),
+    DestinationProfile("Darjeeling", "India", ("mountains", "tea", "nature"), 2700, "tea gardens, sunrise points, toy train", "assets/destinations/darjeeling.jpg", ("Tiger Hill", "Batasia Loop", "Tea estate", "Mall Road")),
+    DestinationProfile("Leh Ladakh", "India", ("adventure", "mountains", "roadtrip"), 4800, "high-altitude drives, monasteries, lakes", "assets/destinations/leh_ladakh.jpg", ("Shanti Stupa", "Pangong Lake", "Khardung La", "Thiksey Monastery")),
+    DestinationProfile("Varanasi", "India", ("spiritual", "culture", "heritage"), 2000, "Ganga Ghats, ancient temples, spiritual aura", "assets/destinations/varanasi.jpg", ("Dashashwamedh Ghat", "Kashi Vishwanath", "Sarnath", "Boat ride")),
+    DestinationProfile("Agra", "India", ("heritage", "architecture", "history"), 2400, "Taj Mahal, Mughal forts, history", "assets/destinations/agra.jpg", ("Taj Mahal", "Agra Fort", "Fatehpur Sikri", "Mehtab Bagh")),
+    DestinationProfile("Andaman", "India", ("beach", "adventure", "nature"), 4500, "white sand beaches, scuba diving, islands", "assets/destinations/andaman.jpg", ("Radhanagar Beach", "Cellular Jail", "Scuba Diving", "Havelock Island")),
+    DestinationProfile("Munnar", "India", ("mountains", "tea", "nature"), 2800, "rolling hills, tea museums, cool breeze", "assets/destinations/munnar.jpg", ("Tea Museum", "Mattupetty Dam", "Echo Point", "Anamudi Peak")),
+    DestinationProfile("Jaisalmer", "India", ("desert", "heritage", "adventure"), 2700, "sand dunes, golden forts, camel safaris", "assets/destinations/jaisalmer.jpg", ("Jaisalmer Fort", "Sam Sand Dunes", "Patwon Ki Haveli", "Desert Safari")),
+    DestinationProfile("Shimla", "India", ("mountains", "heritage", "shopping"), 3100, "colonial architecture, snow, mall road", "assets/destinations/shimla.jpg", ("Mall Road", "Jakhu Temple", "Ridge", "Toy Train")),
+    DestinationProfile("Ooty", "India", ("mountains", "nature", "heritage"), 2500, "botanical gardens, lakes, pine forests", "assets/destinations/ooty.jpg", ("Botanical Garden", "Ooty Lake", "Doddabetta Peak", "Rose Garden")),
+    DestinationProfile("Srinagar", "India", ("mountains", "romantic", "nature"), 3600, "Dal Lake, shikaras, mughal gardens", "assets/destinations/srinagar.jpg", ("Dal Lake", "Shalimar Bagh", "Shikara Ride", "Gulmarg Day Trip")),
+    DestinationProfile("Mysore", "India", ("heritage", "culture", "shopping"), 2300, "palaces, silk sarees, rich culture", "assets/destinations/mysore.jpg", ("Mysore Palace", "Chamundi Hill", "Brindavan Gardens", "Devaraja Market")),
+    DestinationProfile("Hampi", "India", ("heritage", "backpacking", "history"), 2100, "ancient ruins, boulder landscapes, history", "assets/destinations/hampi.jpg", ("Virupaksha Temple", "Matanga Hill", "Vitthala Temple", "Hippie Island")),
+    DestinationProfile("Pondicherry", "India", ("beach", "heritage", "cafes"), 2800, "french quarters, distinct cafes, promenades", "assets/destinations/pondicherry.jpg", ("Promenade Beach", "Auroville", "French Colony", "Paradise Beach")),
+    DestinationProfile("Meghalaya", "India", ("nature", "adventure", "waterfalls"), 3200, "living root bridges, waterfalls, caves", "assets/destinations/meghalaya.jpg", ("Double Decker Bridge", "Cherrapunji", "Dawki River", "Seven Sister Falls")),
 )
 
 from .csv_data import CSV_DESTINATIONS
@@ -56,14 +56,8 @@ NON_STAY_KEYS = ("food", "local_transport", "activities", "buffer")
 
 
 def list_destinations() -> list[Destination]:
-    import random
-    
-    # Return the premium hand-picked 16 + 4 random ones from CSV
-    premium = list(DESTINATIONS[:16])
-    others = list(DESTINATIONS[20:])
-    random.shuffle(others)
-    
-    display_list = premium + others[:4]
+    # Return the exact 20 premium hand-picked destinations
+    display_list = list(DESTINATIONS[:20])
     
     return [
         Destination(
